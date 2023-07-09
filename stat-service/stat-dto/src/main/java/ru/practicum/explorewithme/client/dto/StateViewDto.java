@@ -1,4 +1,4 @@
-package ru.practicum.explorewithme.dto;
+package ru.practicum.explorewithme.client.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,5 +17,5 @@ public class StateViewDto {
 
     private String uri;
 
-    private Integer hits;
+    private Long hits;
 }

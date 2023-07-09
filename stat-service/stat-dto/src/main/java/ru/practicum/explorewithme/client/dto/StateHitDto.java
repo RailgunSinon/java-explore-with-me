@@ -1,4 +1,4 @@
-package ru.practicum.explorewithme.dto;
+package ru.practicum.explorewithme.client.dto;
 
 import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;

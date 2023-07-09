@@ -9,7 +9,15 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
+  <groupId>ru.practicum</groupId>
   <artifactId>stat-service</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
 
+  <modules>
+    <module>stat-client</module>
+    <module>stat-dto</module>
+    <module>stat-server</module>
+  </modules>
 
 </project>
