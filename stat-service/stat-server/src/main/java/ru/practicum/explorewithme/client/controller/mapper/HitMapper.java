@@ -3,9 +3,11 @@ package ru.practicum.explorewithme.client.controller.mapper;
 import static ru.practicum.explorewithme.client.GlobalStaticProperties.DATE_FORMAT;
 
 import java.time.LocalDateTime;
+import org.springframework.stereotype.Component;
 import ru.practicum.explorewithme.client.dto.StateHitDto;
 import ru.practicum.explorewithme.client.model.Hit;
 
+@Component
 public class HitMapper {
 
     public Hit toEntity(StateHitDto stateHitDto) {
