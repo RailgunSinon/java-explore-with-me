@@ -1,6 +1,6 @@
-package ru.practicum.explorewithme.client.controller;
+package ru.practicum.explorewithme.statserver.controller;
 
-import static ru.practicum.explorewithme.client.GlobalStaticProperties.DATE_FORMAT;
+import static ru.practicum.explorewithme.statserver.GlobalStaticProperties.DATE_FORMAT;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ru.practicum.explorewithme.client.dto.StateHitDto;
-import ru.practicum.explorewithme.client.dto.StateViewDto;
-import ru.practicum.explorewithme.client.service.StatsService;
+import ru.practicum.explorewithme.dto.StateHitDto;
+import ru.practicum.explorewithme.dto.StateViewDto;
+import ru.practicum.explorewithme.statserver.service.StatsService;
 
 @RestController
 @Slf4j

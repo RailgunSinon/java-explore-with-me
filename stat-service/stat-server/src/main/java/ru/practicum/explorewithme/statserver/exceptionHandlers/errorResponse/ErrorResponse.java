@@ -1,4 +1,4 @@
-package ru.practicum.explorewithme.client.exceptionHandlers.errorResponse;
+package ru.practicum.explorewithme.statserver.exceptionHandlers.errorResponse;
 
 import java.util.Arrays;
 import java.util.List;

@@ -1,9 +1,9 @@
-package ru.practicum.explorewithme.client.service;
+package ru.practicum.explorewithme.statserver.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import ru.practicum.explorewithme.client.dto.StateHitDto;
-import ru.practicum.explorewithme.client.dto.StateViewDto;
+import ru.practicum.explorewithme.dto.StateHitDto;
+import ru.practicum.explorewithme.dto.StateViewDto;
 
 public interface StatsService {
 

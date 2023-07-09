@@ -1,4 +1,4 @@
-package ru.practicum.explorewithme.client.exceptionHandlers;
+package ru.practicum.explorewithme.statserver.exceptionHandlers;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import ru.practicum.explorewithme.client.exceptionHandlers.errorResponse.ErrorResponse;
+import ru.practicum.explorewithme.statserver.exceptionHandlers.errorResponse.ErrorResponse;
 
 @RestControllerAdvice("ru.practicum.stats")
 @Slf4j

@@ -1,4 +1,4 @@
-package ru.practicum.explorewithme.client;
+package ru.practicum.explorewithme.statserver;
 
 import java.net.URLEncoder;
 import java.util.List;
@@ -8,8 +8,8 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
-import ru.practicum.explorewithme.client.dto.StateHitDto;
-import ru.practicum.explorewithme.client.dto.StateViewDto;
+import ru.practicum.explorewithme.dto.StateHitDto;
+import ru.practicum.explorewithme.dto.StateViewDto;
 
 @RequiredArgsConstructor
 public class StatClient {

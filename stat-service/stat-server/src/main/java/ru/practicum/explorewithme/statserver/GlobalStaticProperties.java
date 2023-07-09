@@ -1,4 +1,4 @@
-package ru.practicum.explorewithme.client;
+package ru.practicum.explorewithme.statserver;
 
 import java.time.format.DateTimeFormatter;
 import lombok.NoArgsConstructor;

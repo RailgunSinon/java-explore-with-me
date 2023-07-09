@@ -1,11 +1,11 @@
-package ru.practicum.explorewithme.client.storage;
+package ru.practicum.explorewithme.statserver.storage;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-import ru.practicum.explorewithme.client.model.Hit;
+import ru.practicum.explorewithme.statserver.model.Hit;
 
 @Repository
 public interface HitRepository extends JpaRepository<Hit, Long> {

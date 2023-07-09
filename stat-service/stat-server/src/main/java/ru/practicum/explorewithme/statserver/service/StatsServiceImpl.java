@@ -1,4 +1,4 @@
-package ru.practicum.explorewithme.client.service;
+package ru.practicum.explorewithme.statserver.service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -9,11 +9,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.practicum.explorewithme.client.controller.mapper.HitMapper;
-import ru.practicum.explorewithme.client.dto.StateHitDto;
-import ru.practicum.explorewithme.client.dto.StateViewDto;
-import ru.practicum.explorewithme.client.model.Hit;
-import ru.practicum.explorewithme.client.storage.HitRepository;
+import ru.practicum.explorewithme.statserver.controller.mapper.HitMapper;
+import ru.practicum.explorewithme.dto.StateHitDto;
+import ru.practicum.explorewithme.dto.StateViewDto;
+import ru.practicum.explorewithme.statserver.model.Hit;
+import ru.practicum.explorewithme.statserver.storage.HitRepository;
 
 @Service
 @RequiredArgsConstructor

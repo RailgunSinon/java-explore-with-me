@@ -1,11 +1,11 @@
-package ru.practicum.explorewithme.client.controller.mapper;
+package ru.practicum.explorewithme.statserver.controller.mapper;
 
-import static ru.practicum.explorewithme.client.GlobalStaticProperties.DATE_FORMAT;
+import static ru.practicum.explorewithme.statserver.GlobalStaticProperties.DATE_FORMAT;
 
 import java.time.LocalDateTime;
 import org.springframework.stereotype.Component;
-import ru.practicum.explorewithme.client.dto.StateHitDto;
-import ru.practicum.explorewithme.client.model.Hit;
+import ru.practicum.explorewithme.dto.StateHitDto;
+import ru.practicum.explorewithme.statserver.model.Hit;
 
 @Component
 public class HitMapper {

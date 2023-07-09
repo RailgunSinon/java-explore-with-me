@@ -1,4 +1,4 @@
-package ru.practicum.explorewithme.client;
+package ru.practicum.explorewithme.statserver;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
