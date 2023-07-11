@@ -26,7 +26,6 @@ public class StatsServiceImpl implements StatsService {
     @Override
     @Transactional
     public StateHitDto hit(StateHitDto stateHitDto) {
-        log.info("Получен запрос сохранения статистики");
         Hit hit = hitMapper.toEntity(stateHitDto);
         return hitMapper.toDto(hitRepository.save(hit));
     }

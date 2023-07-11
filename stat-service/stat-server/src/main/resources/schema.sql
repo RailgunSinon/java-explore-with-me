@@ -7,3 +7,6 @@ CREATE TABLE IF NOT EXISTS hits (
   ip VARCHAR(50) NOT NULL,
   created TIMESTAMP NOT NULL
 );
+
+CREATE INDEX IF NOT EXISTS hits_uri_ind ON hits(uri ASC)
+CREATE INDEX IF NOT EXISTS hits_created_ind ON hits(created ASC)

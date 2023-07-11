@@ -17,12 +17,12 @@ public class StatClient {
     private final RestTemplate restTemplate;
 
     public ResponseEntity<StateHitDto> hit(StateHitDto stateHitDto) {
-        return restTemplate.exchange("/hit", HttpMethod.POST,
-            new HttpEntity<>(stateHitDto), StateHitDto.class);
+        return restTemplate.exchange("/hit", HttpMethod.POST, new HttpEntity<>(stateHitDto),
+            StateHitDto.class);
     }
 
-    public ResponseEntity<List<StateViewDto>> stats(String start, String end,
-        List<String> uris, Boolean unique) {
+    public ResponseEntity<List<StateViewDto>> stats(String start, String end, List<String> uris,
+        Boolean unique) {
         String params = "?start=" + URLEncoder.encode(start) + "&end=" + URLEncoder.encode(end);
         for (String uri : uris) {
             params += "&uris=" + uri;
