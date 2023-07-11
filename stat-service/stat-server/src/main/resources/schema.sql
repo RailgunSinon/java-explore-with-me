@@ -8,5 +8,5 @@ CREATE TABLE IF NOT EXISTS hits (
   created TIMESTAMP NOT NULL
 );
 
-CREATE INDEX IF NOT EXISTS hits_uri_ind ON hits(uri ASC)
-CREATE INDEX IF NOT EXISTS hits_created_ind ON hits(created ASC)
+CREATE INDEX IF NOT EXISTS hits_uri_ind ON hits(uri ASC);
+CREATE INDEX IF NOT EXISTS hits_created_ind ON hits(created ASC);
