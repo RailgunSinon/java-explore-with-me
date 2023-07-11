@@ -9,9 +9,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.practicum.explorewithme.statserver.controller.mapper.HitMapper;
 import ru.practicum.explorewithme.dto.StateHitDto;
 import ru.practicum.explorewithme.dto.StateViewDto;
+import ru.practicum.explorewithme.statserver.controller.mapper.HitMapper;
 import ru.practicum.explorewithme.statserver.model.Hit;
 import ru.practicum.explorewithme.statserver.storage.HitRepository;
 
@@ -22,6 +22,8 @@ public class StatsServiceImpl implements StatsService {
 
     private final HitRepository hitRepository;
     private final HitMapper hitMapper;
+   /* private EntityManagerFactory entityManagerFactory
+        = Persistence.createEntityManagerFactory("default");*/
 
     @Override
     @Transactional
@@ -29,6 +31,35 @@ public class StatsServiceImpl implements StatsService {
         Hit hit = hitMapper.toEntity(stateHitDto);
         return hitMapper.toDto(hitRepository.save(hit));
     }
+/*
+    @Override
+    @Transactional(readOnly = true)
+    public List<StateViewDto> stats(LocalDateTime start, LocalDateTime end, List<String> uris,
+        Boolean unique) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        List<StateViewDto> statResult;
+        Query query;
+        if (unique.booleanValue() == true) {
+            query = entityManager.createQuery("SELECT h.app,h.uri,COUNT(DISTINCT (h.ip)) "
+                + "FROM Hit h "
+                + "WHERE h.created BETWEEN ?1 AND ?2 AND (h.uri IN ?3) "
+                + "GROUP BY h.app,h.uri "
+                + "ORDER BY h.app,h.uri");
+        } else {
+            query = entityManager.createQuery("SELECT h.app,h.uri,COUNT(h.ip) "
+                + "FROM Hit h "
+                + "WHERE h.created BETWEEN ?1 AND ?2 AND (h.uri IN ?3) "
+                + "GROUP BY h.app,h.uri "
+                + "ORDER BY h.app,h.uri");
+        }
+        query.setParameter(1, start).setParameter(2, end).setParameter(3, uris);
+        statResult = query.getResultList();
+        statResult = statResult.stream()
+                     .sorted(Comparator.comparingLong(StateViewDto::getHits).reversed())
+                     .collect(Collectors.toList());
+
+        return statResult;
+    }*/
 
     @Override
     @Transactional(readOnly = true)
@@ -45,7 +76,6 @@ public class StatsServiceImpl implements StatsService {
             stateViewDtos.add(viewStateDto);
             i += code;
         }
-
         stateViewDtos = stateViewDtos.stream()
             .sorted(Comparator.comparingLong(StateViewDto::getHits).reversed())
             .collect(Collectors.toList());
