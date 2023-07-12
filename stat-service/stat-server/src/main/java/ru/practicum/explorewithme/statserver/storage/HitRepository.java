@@ -10,11 +10,7 @@ import ru.practicum.explorewithme.statserver.model.Hit;
 
 @Repository
 public interface HitRepository extends JpaRepository<Hit, Long> {
-
-    @Query("SELECT h FROM Hit h WHERE h.created BETWEEN ?1 AND ?2 AND (h.uri IN ?3 OR ?3 IS NULL) "
-        + "ORDER BY h.app,h.uri,h.ip")
-    List<Hit> findHits(LocalDateTime start, LocalDateTime end, List<String> uris);
-
+    
     @Query("SELECT new ru.practicum.explorewithme.dto.StateViewDto(h.app,h.uri,COUNT(h.ip)) "
         + "FROM Hit h WHERE h.created BETWEEN ?1 AND ?2 AND (h.uri IN ?3 OR ?3 IS NULL) "
         + "GROUP BY h.app,h.uri ORDER BY COUNT(h.ip) DESC")
