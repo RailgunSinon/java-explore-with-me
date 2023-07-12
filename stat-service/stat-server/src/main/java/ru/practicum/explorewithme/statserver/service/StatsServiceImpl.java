@@ -1,12 +1,9 @@
 package ru.practicum.explorewithme.statserver.service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -69,11 +66,10 @@ public class StatsServiceImpl implements StatsService {
     public List<StateViewDto> stats(LocalDateTime start, LocalDateTime end, List<String> uris,
         Boolean unique) {
         List<StateViewDto> stateViewDtos;
-        if(unique.booleanValue() == true){
-            stateViewDtos = hitRepository.findHitsUniq(start,end,uris);
-        }
-        else {
-            stateViewDtos = hitRepository.findHitsNoUniq(start,end,uris);
+        if (unique.booleanValue() == true) {
+            stateViewDtos = hitRepository.findHitsUniq(start, end, uris);
+        } else {
+            stateViewDtos = hitRepository.findHitsNoUniq(start, end, uris);
         }
 
         stateViewDtos = stateViewDtos.stream()
