@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,7 +25,7 @@ public class StatsServiceImpl implements StatsService {
     private final HitRepository hitRepository;
     private final HitMapper hitMapper;
    /* private EntityManagerFactory entityManagerFactory
-        = Persistence.createEntityManagerFactory("default");*/
+        = Persistence.createEntityManagerFactory("stats");*/
 
     @Override
     @Transactional
@@ -61,6 +63,27 @@ public class StatsServiceImpl implements StatsService {
         return statResult;
     }*/
 
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<StateViewDto> stats(LocalDateTime start, LocalDateTime end, List<String> uris,
+        Boolean unique) {
+        List<StateViewDto> stateViewDtos;
+        if(unique.booleanValue() == true){
+            stateViewDtos = hitRepository.findHitsUniq(start,end,uris);
+        }
+        else {
+            stateViewDtos = hitRepository.findHitsNoUniq(start,end,uris);
+        }
+
+        stateViewDtos = stateViewDtos.stream()
+            .sorted(Comparator.comparingLong(StateViewDto::getHits).reversed())
+            .collect(Collectors.toList());
+
+        return stateViewDtos;
+    }
+
+    /*
     @Override
     @Transactional(readOnly = true)
     public List<StateViewDto> stats(LocalDateTime start, LocalDateTime end, List<String> uris,
@@ -82,7 +105,7 @@ public class StatsServiceImpl implements StatsService {
 
         return stateViewDtos;
 
-    }
+    }*/
 
     private Integer createViewStateDto(Integer code, StateViewDto stateViewDto, List<Hit> hits,
         Integer i, Boolean unique) {
