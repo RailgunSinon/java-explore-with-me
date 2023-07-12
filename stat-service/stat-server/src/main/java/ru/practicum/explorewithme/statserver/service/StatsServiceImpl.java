@@ -71,10 +71,10 @@ public class StatsServiceImpl implements StatsService {
         } else {
             stateViewDtos = hitRepository.findHitsNoUniq(start, end, uris);
         }
-
+/*
         stateViewDtos = stateViewDtos.stream()
             .sorted(Comparator.comparingLong(StateViewDto::getHits).reversed())
-            .collect(Collectors.toList());
+            .collect(Collectors.toList());*/
 
         return stateViewDtos;
     }
