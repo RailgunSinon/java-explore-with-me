@@ -2,6 +2,7 @@ package ru.practicum.explorewithme.statserver.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import javax.validation.ValidationException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,9 @@ public class StatsServiceImpl implements StatsService {
     @Transactional(readOnly = true)
     public List<StateViewDto> stats(LocalDateTime start, LocalDateTime end, List<String> uris,
         Boolean unique) {
+        if (start.isAfter(end) || start == null || end == null){
+            throw new ValidationException("Bad start or end date!");
+        }
         return unique.booleanValue() == true ? hitRepository.findHitsUniq(start, end, uris)
             : hitRepository.findHitsNoUniq(start, end, uris);
     }

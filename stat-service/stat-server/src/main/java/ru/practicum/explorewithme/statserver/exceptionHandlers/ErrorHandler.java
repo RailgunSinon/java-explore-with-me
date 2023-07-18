@@ -9,9 +9,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ru.practicum.explorewithme.statserver.exceptionHandlers.errorResponse.ErrorResponse;
 
-@RestControllerAdvice("ru.practicum.stats")
+@RestControllerAdvice("ru.practicum.explorewithme.statserver")
 @Slf4j
 public class ErrorHandler {
+
     @ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorResponse defaultError(final Throwable e) {
