@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.practicum.explorewithme.main.exceptionHandlers.exceptions.ConflictException;
 import ru.practicum.explorewithme.main.exceptionHandlers.exceptions.NotFoundException;
 import ru.practicum.explorewithme.main.user.controller.mapper.UserMapper;
-import ru.practicum.explorewithme.main.user.dto.UserDto;
+import ru.practicum.explorewithme.main.user.model.User;
 import ru.practicum.explorewithme.main.user.service.UserService;
 
 @Validated
@@ -38,27 +38,27 @@ public class UserAdminController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public UserDto addUser(@RequestBody @Valid UserDto userDto)
+    public User addUser(@RequestBody @Valid User user)
         throws InvalidParameterException, ConflictException {
         log.info("Call AdminController addUser with userEmail {}, userName: {}: ",
-            userDto.getEmail(), userDto.getName());
-        return mapper.toUserDto(userService.addUser(mapper.toUser(userDto)));
+            user.getEmail(), user.getName());
+        return userService.addUser(user);
     }
 
     @GetMapping
-    public List<UserDto> getUsersByIds(@RequestParam(required = false) String ids,
+    public List<User> getUsersByIds(@RequestParam(required = false) String ids,
         @RequestParam(defaultValue = "10") @Positive Integer size,
         @RequestParam(defaultValue = "0") @PositiveOrZero Integer from) {
         log.info("Call AdminController getUsersByIds with ids {}:  size {} from {} ", ids, size,
             from);
-        return mapper.toUserDtoList(userService.getUserByIds(ids, from, size));
+        return userService.getUserByIds(ids, from, size);
     }
 
     @PatchMapping("/{id}")
-    public UserDto updateUser(@Positive @PathVariable Long id, @Valid @RequestBody UserDto userDto)
+    public User updateUser(@Positive @PathVariable Long id, @Valid @RequestBody User user)
         throws ValidationException, NotFoundException {
         log.info("Call AdminController updateUser with userId {}: ", id);
-        return mapper.toUserDto(userService.updateUser(id, mapper.toUser(userDto)));
+        return userService.updateUser(id, user);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
