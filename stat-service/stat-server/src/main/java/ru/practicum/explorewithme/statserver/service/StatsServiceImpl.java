@@ -32,7 +32,7 @@ public class StatsServiceImpl implements StatsService {
     @Transactional(readOnly = true)
     public List<StateViewDto> stats(LocalDateTime start, LocalDateTime end, List<String> uris,
         Boolean unique) {
-        if (start.isAfter(end) || start == null || end == null){
+        if (start.isAfter(end) || start == null || end == null) {
             throw new ValidationException("Bad start or end date!");
         }
         return unique.booleanValue() == true ? hitRepository.findHitsUniq(start, end, uris)
