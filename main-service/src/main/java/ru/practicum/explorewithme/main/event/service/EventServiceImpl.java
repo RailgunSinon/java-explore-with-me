@@ -12,7 +12,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
@@ -314,10 +313,6 @@ public class EventServiceImpl implements EventService {
         loadConfirmedRequests(event);
 
         event.setViews(getEventStatistic(event).getHits());
-        /*
-        event.setViews(Objects
-            .requireNonNullElseGet(statDto, () -> Objects.requireNonNull(getEventStatistic(event)))
-            .getHits());*/
 
         log.info("Выполнен запрос к событию {}, url {}, ip {}", event, url, ip);
         return EventMapper.toEventFullDto(event);
