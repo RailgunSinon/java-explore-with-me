@@ -1,5 +1,6 @@
 package ru.practicum.explorewithme.main.enums;
 
-public class AdminStateEventAction {
-
+public enum AdminStateEventAction {
+    PUBLISH_EVENT,
+    REJECT_EVENT
 }

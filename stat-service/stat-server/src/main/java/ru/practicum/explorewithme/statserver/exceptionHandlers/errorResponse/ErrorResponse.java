@@ -1,23 +1,11 @@
 package ru.practicum.explorewithme.statserver.exceptionHandlers.errorResponse;
 
-import java.util.Arrays;
-import java.util.List;
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.http.HttpStatus;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
-@Getter
-@Setter
+@Data
+@RequiredArgsConstructor
 public class ErrorResponse {
-    private int status;
-    private String error;
-    private List<String> trace;
-
-    public ErrorResponse(HttpStatus status, String error, String trace) {
-        this.status = status.value();
-        this.error = error;
-        trace = trace.replaceAll("\t", "  ");
-        String[] tracerows = trace.split(System.lineSeparator());
-        this.trace = Arrays.asList(tracerows);
-    }
+    private final String error;
+    private final String status;
 }

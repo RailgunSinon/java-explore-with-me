@@ -1,5 +1,7 @@
 package ru.practicum.explorewithme.main.enums;
 
-public class EventState {
-
+public enum EventState {
+    PENDING,
+    PUBLISHED,
+    CANCELED
 }

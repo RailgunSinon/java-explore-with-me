@@ -1,5 +1,11 @@
 package ru.practicum.explorewithme.main.compilation.repository;
 
-public interface CompilationRepository {
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import ru.practicum.explorewithme.main.compilation.model.Compilation;
 
+public interface CompilationRepository extends JpaRepository<Compilation, Long> {
+
+    Page<Compilation> findAllByPinnedEquals(Boolean pinned, Pageable pageable);
 }
