@@ -302,7 +302,6 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    @Transactional
     public EventDto getPublicEventById(Long eventId, String url, String ip) {
         Event event = getEventById(eventId);
         StatDto statDto = addNewHit(url, ip);
@@ -313,9 +312,12 @@ public class EventServiceImpl implements EventService {
         }
 
         loadConfirmedRequests(event);
+
+        event.setViews(getEventStatistic(event).getHits());
+        /*
         event.setViews(Objects
             .requireNonNullElseGet(statDto, () -> Objects.requireNonNull(getEventStatistic(event)))
-            .getHits());
+            .getHits());*/
 
         log.info("Выполнен запрос к событию {}, url {}, ip {}", event, url, ip);
         return EventMapper.toEventFullDto(event);
