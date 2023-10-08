@@ -302,6 +302,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    @Transactional
     public EventDto getPublicEventById(Long eventId, String url, String ip) {
         Event event = getEventById(eventId);
         StatDto statDto = addNewHit(url, ip);
