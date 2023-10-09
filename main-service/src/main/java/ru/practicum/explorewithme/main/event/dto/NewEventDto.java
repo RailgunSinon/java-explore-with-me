@@ -17,13 +17,11 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class NewEventDto {
-    @NotNull
     @NotBlank
     @Size(min = 20, max = 2000)
     String annotation;
     @NotNull
     Long category;
-    @NotNull
     @NotBlank
     @Size(min = 20, max = 7000)
     String description;
@@ -37,7 +35,6 @@ public class NewEventDto {
     @PositiveOrZero
     Long participantLimit = 0L;
     Boolean requestModeration = true;
-    @NotNull
     @NotBlank
     @Size(min = 3, max = 120)
     String title;
