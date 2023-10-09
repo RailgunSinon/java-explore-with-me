@@ -1,5 +1,7 @@
 package ru.practicum.explorewithme.main.event.controller;
 
+import static ru.practicum.explorewithme.main.GlobalStaticProperties.DATE_TIME_FORMAT_STRING;
+
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
@@ -36,8 +38,8 @@ public class EventPublicController {
         @RequestParam(required = false, defaultValue = "") String text,
         @RequestParam(required = false, defaultValue = "") List<Long> categories,
         @RequestParam(required = false) Boolean paid,
-        @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime rangeStart,
-        @RequestParam(required = false) @FutureOrPresent @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime rangeEnd,
+        @RequestParam(required = false) @DateTimeFormat(pattern = DATE_TIME_FORMAT_STRING) LocalDateTime rangeStart,
+        @RequestParam(required = false) @FutureOrPresent @DateTimeFormat(pattern = DATE_TIME_FORMAT_STRING) LocalDateTime rangeEnd,
         @RequestParam(defaultValue = "false") boolean onlyAvailable,
         @RequestParam(required = false) String sort,
         @PositiveOrZero @RequestParam(defaultValue = "0") int from,
