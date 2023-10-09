@@ -4,38 +4,41 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.time.LocalDateTime;
+import lombok.experimental.FieldDefaults;
 
 @Data
 @Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class NewEventDto {
     @NotNull
     @NotBlank
     @Size(min = 20, max = 2000)
-    private String annotation;
+    String annotation;
     @NotNull
-    private Long category;
+    Long category;
     @NotNull
     @NotBlank
     @Size(min = 20, max = 7000)
-    private String description;
+    String description;
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     LocalDateTime eventDate;
     @NotNull
     @Valid
-    private LocationDto location;
-    private Boolean paid = false;
+    LocationDto location;
+    Boolean paid = false;
     @PositiveOrZero
-    private Long participantLimit = 0L;
-    private Boolean requestModeration = true;
+    Long participantLimit = 0L;
+    Boolean requestModeration = true;
     @NotNull
     @NotBlank
     @Size(min = 3, max = 120)
-    private String title;
+    String title;
 }

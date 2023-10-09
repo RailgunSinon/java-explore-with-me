@@ -1,11 +1,13 @@
 package ru.practicum.explorewithme.main.event.model;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import lombok.experimental.FieldDefaults;
 
 @Data
 @AllArgsConstructor
@@ -13,12 +15,13 @@ import javax.persistence.*;
 @Builder
 @Entity
 @Table(name = "locations")
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    Long id;
     @Column(name = "lat", nullable = false)
-    private Float lat;
+    Float lat;
     @Column(name = "lon", nullable = false)
-    private Float lon;
+    Float lon;
 }

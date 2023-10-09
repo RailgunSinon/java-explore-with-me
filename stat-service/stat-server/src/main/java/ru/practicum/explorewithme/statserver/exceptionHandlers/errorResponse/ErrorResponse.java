@@ -1,11 +1,14 @@
 package ru.practicum.explorewithme.statserver.exceptionHandlers.errorResponse;
 
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
 @Data
 @RequiredArgsConstructor
+@FieldDefaults(makeFinal = true,level = AccessLevel.PRIVATE)
 public class ErrorResponse {
-    private final String error;
-    private final String status;
+    String error;
+    String status;
 }

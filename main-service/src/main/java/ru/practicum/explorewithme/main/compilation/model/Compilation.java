@@ -10,10 +10,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import ru.practicum.explorewithme.main.event.model.Event;
 
 @Data
@@ -22,19 +24,20 @@ import ru.practicum.explorewithme.main.event.model.Event;
 @Builder
 @Entity
 @Table(name = "compilations")
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Compilation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    Long id;
     @Column(name = "pinned")
-    private Boolean pinned;
+    Boolean pinned;
     @Column(name = "title")
-    private String title;
+    String title;
     @ManyToMany
     @JoinTable(name = "compilation_event",
         joinColumns = {@JoinColumn(name = "compilation_id")},
         inverseJoinColumns = {@JoinColumn(name = "event_id")})
-    private Set<Event> events;
+    Set<Event> events;
 
 }

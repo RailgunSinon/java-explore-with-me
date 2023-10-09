@@ -11,10 +11,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import ru.practicum.explorewithme.main.enums.RequestStatus;
 import ru.practicum.explorewithme.main.event.model.Event;
 import ru.practicum.explorewithme.main.user.model.User;
@@ -25,24 +27,25 @@ import ru.practicum.explorewithme.main.user.model.User;
 @Builder
 @Entity
 @Table(name = "requests")
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class EventRequest {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    Long id;
 
     @Column(name = "created")
-    private LocalDateTime created;
+    LocalDateTime created;
 
     @ManyToOne
     @JoinColumn(name = "event_id", nullable = false)
-    private Event event;
+    Event event;
 
     @ManyToOne
     @JoinColumn(name = "requester_id", nullable = false)
-    private User requester;
+    User requester;
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
-    private RequestStatus status;
+    RequestStatus status;
 }

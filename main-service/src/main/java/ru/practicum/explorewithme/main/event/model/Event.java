@@ -1,11 +1,13 @@
 package ru.practicum.explorewithme.main.event.model;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import lombok.experimental.FieldDefaults;
 import ru.practicum.explorewithme.main.category.model.Category;
 import ru.practicum.explorewithme.main.enums.EventState;
 import ru.practicum.explorewithme.main.user.model.User;
@@ -16,57 +18,58 @@ import ru.practicum.explorewithme.main.user.model.User;
 @Builder
 @Entity
 @Table(name = "events")
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    Long id;
 
     @Column(name = "annotation", nullable = false)
-    private String annotation;
+    String annotation;
 
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
-    private Category category;
+    Category category;
 
     @Transient
-    private Long confirmedRequests;
+    Long confirmedRequests;
 
     @Column(name = "created_on", nullable = false)
-    private LocalDateTime createdOn;
+    LocalDateTime createdOn;
 
     @Column(name = "description")
-    private String description;
+    String description;
 
     @Column(name = "event_date")
-    private LocalDateTime eventDate;
+    LocalDateTime eventDate;
 
     @ManyToOne
     @JoinColumn(name = "initiator_id", nullable = false)
-    private User initiator;
+    User initiator;
 
     @ManyToOne
     @JoinColumn(name = "location_id", nullable = false)
-    private Location location;
+    Location location;
 
     @Column(name = "paid", nullable = false)
-    private Boolean paid;
+    Boolean paid;
 
     @Column(name = "participant_limit")
-    private Long participantLimit;
+    Long participantLimit;
 
     @Column(name = "published_on")
-    private LocalDateTime publishedOn;
+    LocalDateTime publishedOn;
 
     @Column(name = "request_moderation")
-    private Boolean requestModeration;
+    Boolean requestModeration;
 
     @Column(name = "state")
     @Enumerated(EnumType.STRING)
-    private EventState state;
+    EventState state;
 
     @Column(name = "title")
-    private String title;
+    String title;
 
     @Transient
-    private Long views = 0L;
+    Long views = 0L;
 }

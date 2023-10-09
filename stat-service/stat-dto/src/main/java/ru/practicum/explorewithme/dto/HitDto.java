@@ -1,20 +1,22 @@
 package ru.practicum.explorewithme.dto;
 
-import lombok.Builder;
-import lombok.Data;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Data;
+import lombok.experimental.FieldDefaults;
 
 @Data
 @Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class HitDto {
     @NotBlank
-    private String app;
+    String app;
     @NotBlank
-    private String uri;
+    String uri;
     @NotBlank
-    private String ip;
+    String ip;
     @NotNull
-    private String timestamp;
+    String timestamp;
 }

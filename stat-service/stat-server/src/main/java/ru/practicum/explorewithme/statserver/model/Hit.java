@@ -7,11 +7,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.FieldDefaults;
 
 @Getter
 @Setter
@@ -20,17 +22,18 @@ import lombok.Setter;
 @Builder
 @Entity
 @Table(name = "hits")
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Hit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    long id;
     @Column(nullable = false, length = 255)
-    private String app;
+    String app;
     @Column(nullable = false, length = 255)
-    private String uri;
+    String uri;
     @Column(nullable = false, length = 50)
-    private String ip;
+    String ip;
     @Column(nullable = false)
-    private LocalDateTime created;
+    LocalDateTime created;
 }
