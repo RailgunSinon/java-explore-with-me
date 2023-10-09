@@ -1,13 +1,12 @@
 package ru.practicum.explorewithme.main.request.service;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
 import ru.practicum.explorewithme.main.enums.EventState;
 import ru.practicum.explorewithme.main.enums.RequestStatus;
 import ru.practicum.explorewithme.main.event.model.Event;
@@ -26,6 +25,7 @@ import ru.practicum.explorewithme.main.user.repository.UserRepository;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class EventRequestServiceImpl implements EventRequestService {
+
     private final UserRepository userRepository;
     private final EventRepository eventRepository;
     private final EventRequestRepository requestRepository;
@@ -41,7 +41,8 @@ public class EventRequestServiceImpl implements EventRequestService {
             throw new ConflictException("Вы уже добавляли запрос на участие в этом событие!");
         }
         if (event.getInitiator().getId().equals(userId)) {
-            throw new ConflictException("Вы являетесь инициатором события и не можете добавить запрос на участие!");
+            throw new ConflictException(
+                "Вы являетесь инициатором события и не можете добавить запрос на участие!");
         }
         if (!event.getState().equals(EventState.PUBLISHED)) {
             throw new ConflictException("Данное событие еще не опубликовано!");
@@ -58,7 +59,8 @@ public class EventRequestServiceImpl implements EventRequestService {
         if (!event.getRequestModeration()) {
             request.setStatus(RequestStatus.CONFIRMED);
         }
-        log.info("Пользователь с id = {} добавил запрос на участие в событии с id = {}", userId, eventId);
+        log.info("Пользователь с id = {} добавил запрос на участие в событии с id = {}", userId,
+            eventId);
         return EventRequestMapper.toRequestDto(requestRepository.save(request));
     }
 
@@ -68,7 +70,7 @@ public class EventRequestServiceImpl implements EventRequestService {
         User requester = getRequester(userId);
         EventRequest request = getRequest(requestId);
         if (!requester.getId().equals(request.getRequester().getId())) {
-            throw new ConflictException("Вы не можете отменить чужой запрос!");
+            throw new ConflictException("Вы не можете отменить чужой запрос с id = " + requestId);
         }
         request.setStatus(RequestStatus.CANCELED);
         log.info("Пользователь с id = {} отменил свой запрос с id = {}", userId, requestId);
@@ -80,7 +82,8 @@ public class EventRequestServiceImpl implements EventRequestService {
         User requester = getRequester(userId);
         List<EventRequest> userRequests = requestRepository.findAllByRequester(requester);
         log.info("Получен список всех запросов пользователя с id = {}", userId);
-        return userRequests.stream().map(EventRequestMapper::toRequestDto).collect(Collectors.toList());
+        return userRequests.stream().map(EventRequestMapper::toRequestDto)
+            .collect(Collectors.toList());
     }
 
     private User getRequester(Long userId) {
