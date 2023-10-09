@@ -2,13 +2,13 @@ package ru.practicum.explorewithme.statserver.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import ru.practicum.explorewithme.dto.StateHitDto;
-import ru.practicum.explorewithme.dto.StateViewDto;
+import ru.practicum.explorewithme.dto.HitDto;
+import ru.practicum.explorewithme.dto.StatDto;
 
 public interface StatsService {
 
-    StateHitDto hit(StateHitDto stateHitDto);
+    HitDto addHit(HitDto hitDto);
 
-    List<StateViewDto> stats(LocalDateTime start, LocalDateTime end, List<String> uris,
+    List<StatDto> getStatistics(LocalDateTime start, LocalDateTime end, List<String> uris,
         Boolean unique);
 }
