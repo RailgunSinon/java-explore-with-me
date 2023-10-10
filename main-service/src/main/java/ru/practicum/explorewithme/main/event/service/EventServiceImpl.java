@@ -1,6 +1,5 @@
 package ru.practicum.explorewithme.main.event.service;
 
-
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
 import static ru.practicum.explorewithme.main.enums.RequestStatus.CONFIRMED;
@@ -117,6 +116,7 @@ public class EventServiceImpl implements EventService {
             new NotFoundException(String.format("Событие с id=%d не найдено", eventId)));
         Event event = eventRepository.findByInitiatorAndId(initiator, eventId);
         event.setComments((long) commentRepository.findAllByEventIn(List.of(event)).size());
+
         log.info("Получена подробная информация о событии с id {} пользователем с id {}", eventId,
             initiatorId);
         return EventMapper.toEventFullDto(event);
@@ -295,7 +295,7 @@ public class EventServiceImpl implements EventService {
         List<StatDto> eventsStatistic = getStatisticForEventList(
             events); // выгрузили статистику событий
         Map<String, Long> eventViews = loadViewsToEventList(eventsStatistic); // выгрузили просмотры
-        Map<Event, Long> eventsComments = getEventsComments(events); //выгрузили комментарии
+        Map<Event, Long> eventsComments = getEventsComments(events); //выгрузили комменты
 
         for (Event event : events) {
             event.setConfirmedRequests(confirmedRequests.get(event));
@@ -322,7 +322,6 @@ public class EventServiceImpl implements EventService {
         }
 
         loadConfirmedRequests(event);
-
         event.setViews(getEventStatistic(event).getHits());
         event.setComments((long) commentRepository.findAllByEventIn(List.of(event)).size());
 
@@ -490,7 +489,7 @@ public class EventServiceImpl implements EventService {
     }
 
     private Map<Event, Long> getConfirmedRequestsForEventList(List<Event> events) {
-        return requestRepository.findAllByEventInAndStatus(events, CONFIRMED)
+        return requestRepository.findAllByEventInAndStatus(events, RequestStatus.CONFIRMED)
             .stream()
             .collect(groupingBy(EventRequest::getEvent, counting()));
     }
@@ -503,12 +502,6 @@ public class EventServiceImpl implements EventService {
 
         log.info("Получена статистика о событии {}", event);
         return statistics.isEmpty() ? null : statistics.get(0);
-    }
-
-    private Map<Event, Long> getEventsComments(List<Event> events) {
-        return commentRepository.findAllByEventIn(events)
-            .stream()
-            .collect(groupingBy(Comment::getEvent, counting()));
     }
 
     private List<StatDto> getStatisticForEventList(List<Event> events) {
@@ -533,8 +526,14 @@ public class EventServiceImpl implements EventService {
 
     private void loadConfirmedRequests(Event event) {
         Long confirmedRequestsCount = requestRepository
-            .countByEventIdAndStatus(event.getId(), CONFIRMED);
+            .countByEventIdAndStatus(event.getId(), RequestStatus.CONFIRMED);
         event.setConfirmedRequests(confirmedRequestsCount);
+    }
+
+    private Map<Event, Long> getEventsComments(List<Event> events) {
+        return commentRepository.findAllByEventIn(events)
+            .stream()
+            .collect(groupingBy(Comment::getEvent, counting()));
     }
 
     private Sort defineSorting(String sort) {
