@@ -30,6 +30,8 @@ import ru.practicum.explorewithme.dto.HitDto;
 import ru.practicum.explorewithme.dto.StatDto;
 import ru.practicum.explorewithme.main.category.model.Category;
 import ru.practicum.explorewithme.main.category.repository.CategoryRepository;
+import ru.practicum.explorewithme.main.comment.model.Comment;
+import ru.practicum.explorewithme.main.comment.repository.CommentRepository;
 import ru.practicum.explorewithme.main.enums.AdminStateEventAction;
 import ru.practicum.explorewithme.main.enums.EventState;
 import ru.practicum.explorewithme.main.enums.RequestStatus;
@@ -73,6 +75,7 @@ public class EventServiceImpl implements EventService {
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
     private final EventRequestRepository requestRepository;
+    private final CommentRepository commentRepository;
     private final StatClient statClient;
 
     @Override
@@ -95,7 +98,12 @@ public class EventServiceImpl implements EventService {
     public Collection<EventShortDto> getAllByUserId(Long userId, Integer from, Integer size) {
         User initiator = getUserById(userId);
         Pageable pageable = PageRequest.of(from / size, size, Sort.by("id").ascending());
-        Collection<Event> eventsOfUser = eventRepository.findAllByInitiator(initiator, pageable);
+        List<Event> eventsOfUser = eventRepository.findAllByInitiator(initiator, pageable);
+
+        Map<Event, Long> eventsComments = getEventsComments(eventsOfUser);
+        for (Event event : eventsOfUser) {
+            event.setComments(eventsComments.get(event));
+        }
 
         log.info("Получение событий пользователя с id {} и параметрами from {} и size {}", userId,
             from, size);
@@ -107,10 +115,11 @@ public class EventServiceImpl implements EventService {
         User initiator = getUserById(initiatorId);
         eventRepository.findById(eventId).orElseThrow(() ->
             new NotFoundException(String.format("Событие с id=%d не найдено", eventId)));
-
+        Event event = eventRepository.findByInitiatorAndId(initiator, eventId);
+        event.setComments((long) commentRepository.findAllByEventIn(List.of(event)).size());
         log.info("Получена подробная информация о событии с id {} пользователем с id {}", eventId,
             initiatorId);
-        return EventMapper.toEventFullDto(eventRepository.findByInitiatorAndId(initiator, eventId));
+        return EventMapper.toEventFullDto(event);
     }
 
     @Override
@@ -286,11 +295,13 @@ public class EventServiceImpl implements EventService {
         List<StatDto> eventsStatistic = getStatisticForEventList(
             events); // выгрузили статистику событий
         Map<String, Long> eventViews = loadViewsToEventList(eventsStatistic); // выгрузили просмотры
+        Map<Event, Long> eventsComments = getEventsComments(events); //выгрузили комментарии
 
         for (Event event : events) {
             event.setConfirmedRequests(confirmedRequests.get(event));
             event.setViews(eventViews.get(String.format("/events/%s", event.getId())));
             foundEventDtoList.add(EventMapper.toEventFullDto(event));
+            event.setComments(eventsComments.get(event));
         }
 
         log.info(
@@ -313,6 +324,7 @@ public class EventServiceImpl implements EventService {
         loadConfirmedRequests(event);
 
         event.setViews(getEventStatistic(event).getHits());
+        event.setComments((long) commentRepository.findAllByEventIn(List.of(event)).size());
 
         log.info("Выполнен запрос к событию {}, url {}, ip {}", event, url, ip);
         return EventMapper.toEventFullDto(event);
@@ -384,9 +396,11 @@ public class EventServiceImpl implements EventService {
 
         List<Event> foundEvents = eventRepository.findAll(specification, pageable);
         Map<Event, Long> confirmedRequests = getConfirmedRequestsForEventList(foundEvents);
+        Map<Event, Long> eventsComments = getEventsComments(foundEvents);
 
         for (Event event : foundEvents) {
             event.setConfirmedRequests(confirmedRequests.get(event));
+            event.setComments(eventsComments.get(event));
         }
 
         List<StatDto> eventsStatistic = getStatisticForEventList(foundEvents);
@@ -489,6 +503,12 @@ public class EventServiceImpl implements EventService {
 
         log.info("Получена статистика о событии {}", event);
         return statistics.isEmpty() ? null : statistics.get(0);
+    }
+
+    private Map<Event, Long> getEventsComments(List<Event> events) {
+        return commentRepository.findAllByEventIn(events)
+            .stream()
+            .collect(groupingBy(Comment::getEvent, counting()));
     }
 
     private List<StatDto> getStatisticForEventList(List<Event> events) {

@@ -1,12 +1,22 @@
 package ru.practicum.explorewithme.main.event.model;
 
+import java.time.LocalDateTime;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import javax.persistence.*;
-import java.time.LocalDateTime;
 import lombok.experimental.FieldDefaults;
 import ru.practicum.explorewithme.main.category.model.Category;
 import ru.practicum.explorewithme.main.enums.EventState;
@@ -20,6 +30,7 @@ import ru.practicum.explorewithme.main.user.model.User;
 @Table(name = "events")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Event {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
@@ -72,4 +83,7 @@ public class Event {
 
     @Transient
     Long views = 0L;
+
+    @Transient
+    Long comments;
 }

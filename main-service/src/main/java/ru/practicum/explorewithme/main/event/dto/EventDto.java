@@ -30,4 +30,5 @@ public class EventDto {
     EventState state;
     String title;
     Long views;
+    Long comments;
 }
